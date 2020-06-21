@@ -1,4 +1,6 @@
-﻿using CSharpLibrary.Data;
+﻿using AutoMapper;
+using CSharpLibrary.Data;
+using CSharpLibrary.Dtos.UserDto;
 using CSharpLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,10 +14,13 @@ namespace CSharpLibrary.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserRepo _repository;
+        private readonly IMapper _mapper;
 
-        public UserController(IUserRepo repository)
+
+        public UserController(IUserRepo repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         /*
@@ -32,12 +37,12 @@ namespace CSharpLibrary.Controllers
          * USER ROUTES
          */
         [HttpGet("user/{id}")]
-        public ActionResult<User> GetUserById(int id)
+        public ActionResult<UserReadDto> GetUserById(int id)
         {
             var user = _repository.GetUserById(id);
             if(user != null)
             {
-                return Ok(user);
+                return Ok(_mapper.Map<UserReadDto>(user));
             }
             return NotFound();
         }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSharpLibrary.Migrations
 {
-    [DbContext(typeof(UserContext))]
+    [DbContext(typeof(Data.UserContext))]
     partial class UserContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

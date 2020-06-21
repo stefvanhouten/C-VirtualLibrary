@@ -26,7 +26,6 @@ namespace CSharpLibrary.Data
                 .FirstOrDefault(p => p.Id == id);
         }
 
-
         public IEnumerable<User> GetAllUsers()
         {
             return _context.Users.ToList();

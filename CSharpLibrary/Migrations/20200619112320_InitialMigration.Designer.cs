@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSharpLibrary.Migrations
 {
-    [DbContext(typeof(UserContext))]
+    [DbContext(typeof(Data.UserContext))]
     [Migration("20200619112320_InitialMigration")]
     partial class InitialMigration
     {

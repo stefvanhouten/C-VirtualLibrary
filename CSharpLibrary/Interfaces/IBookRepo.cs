@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using CSharpLibrary.Models;
 
 namespace CSharpLibrary.Data
 {
     public interface IBookRepo
     {
-        int GetBookById(int id);
+        Book GetBookById(int id);
+        void CreateBook(Book book);
+        bool SaveChanges();
     }
 }
