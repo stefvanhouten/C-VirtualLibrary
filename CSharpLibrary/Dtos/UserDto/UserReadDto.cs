@@ -11,13 +11,7 @@ namespace CSharpLibrary.Dtos.UserDto
     {
         public string Name;
 
-        public virtual ICollection<PostDto> Posts { get; set; }
         public ICollection<RentedBookDto> RentedBooks { get; set; }
-
-        public class PostDto
-        {
-            public string Title;
-        }
 
         public class RentedBookDto
         {

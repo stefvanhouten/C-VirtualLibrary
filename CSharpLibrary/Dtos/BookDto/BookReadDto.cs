@@ -7,6 +7,6 @@ namespace CSharpLibrary.Dtos.BookDto
 {
     public class BookReadDto
     {
-        public string Name { get; set; }
+        public string Title { get; set; }
     }
 }

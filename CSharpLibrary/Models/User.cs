@@ -15,7 +15,6 @@ namespace CSharpLibrary.Models
         [MaxLength(255)]
         public string Name { get; set; }
 
-        public ICollection<Post> Posts { get; set; }
         public ICollection<RentedBook> RentedBooks { get; set; }
 
     }

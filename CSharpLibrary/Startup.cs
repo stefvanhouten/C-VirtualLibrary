@@ -26,7 +26,6 @@ namespace CSharpLibrary
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<UserContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("UserConnection")));
-            services.AddDbContext<BookContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("UserConnection")));
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddControllers().AddNewtonsoftJson(o =>
             {

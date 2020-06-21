@@ -5,25 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200617123517_InitialCreate.cs" />
-    <Compile Remove="Migrations\20200617123517_InitialCreate.Designer.cs" />
-    <Compile Remove="Migrations\20200618102134_InitialMigration.cs" />
-    <Compile Remove="Migrations\20200618102134_InitialMigration.Designer.cs" />
-    <Compile Remove="Migrations\20200618102545_InitialMigration.cs" />
-    <Compile Remove="Migrations\20200618102545_InitialMigration.Designer.cs" />
-    <Compile Remove="Migrations\20200618125353_InitialCreate.cs" />
-    <Compile Remove="Migrations\20200618125353_InitialCreate.Designer.cs" />
-    <Compile Remove="Migrations\20200618130825_InitialCreate.cs" />
-    <Compile Remove="Migrations\20200618130825_InitialCreate.Designer.cs" />
-    <Compile Remove="Migrations\20200618133342_InitialCreate.cs" />
-    <Compile Remove="Migrations\20200618133342_InitialCreate.Designer.cs" />
-    <Compile Remove="Migrations\20200618133956_InitialCreate.cs" />
-    <Compile Remove="Migrations\20200618133956_InitialCreate.Designer.cs" />
-    <Compile Remove="Migrations\20200619091857_InitialMigration.cs" />
-    <Compile Remove="Migrations\20200619091857_InitialMigration.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />

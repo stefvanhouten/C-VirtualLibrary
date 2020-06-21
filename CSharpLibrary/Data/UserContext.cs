@@ -13,9 +13,7 @@ namespace CSharpLibrary.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>()
-                .HasMany(u => u.Posts)
-                .WithOne(u => u.User);
+            modelBuilder.Entity<User>();
 
             modelBuilder.Entity<RentedBook>()
                 .HasOne(rb => rb.User)
@@ -26,5 +24,6 @@ namespace CSharpLibrary.Data
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Book> Book { get; set; }
     }
 }

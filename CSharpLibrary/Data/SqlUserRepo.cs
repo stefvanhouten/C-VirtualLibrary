@@ -20,7 +20,6 @@ namespace CSharpLibrary.Data
         public User GetUserById(int id)
         {
             return _context.Users
-                .Include(u => u.Posts)
                 .Include(u => u.RentedBooks)
                 .ThenInclude(u => u.Book)
                 .FirstOrDefault(p => p.Id == id);

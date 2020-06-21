@@ -8,9 +8,9 @@ namespace CSharpLibrary.Data
 {
     public class SqlBookRepo : IBookRepo
     {
-        private readonly BookContext _context;
+        private readonly UserContext _context;
 
-        public SqlBookRepo(BookContext context)
+        public SqlBookRepo(UserContext context)
         {
             _context = context;
         }

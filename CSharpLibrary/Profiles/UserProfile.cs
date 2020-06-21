@@ -11,7 +11,6 @@ namespace CSharpLibrary.Profiles
         public UserProfile()
         {
             CreateMap<User, UserReadDto>();
-            CreateMap<Post, UserReadDto.PostDto>();
             CreateMap<RentedBook, UserReadDto.RentedBookDto>();
         }
     }
