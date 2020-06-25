@@ -3,11 +3,12 @@ using CSharpLibrary.Data;
 using CSharpLibrary.Dtos.BookDto;
 using CSharpLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace CSharpLibrary.Controllers
 {
 
-    [Route("api/book")]
+    [Route("api/")]
     [ApiController]
     public class BookController : ControllerBase
     {
@@ -20,7 +21,7 @@ namespace CSharpLibrary.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{id}", Name ="GetBookById")]
+        [HttpGet("book/{id}", Name ="GetBookById")]
         public ActionResult<BookReadDto> GetBookById(int id)
         {
             var bookModel = _repository.GetBookById(id);
@@ -31,14 +32,25 @@ namespace CSharpLibrary.Controllers
             return NotFound();
         }
 
-        [HttpPost]
+        [HttpGet("books")]
+        public ActionResult<IEnumerable<BookReadDto>> GetBooks()
+        {
+            var bookItems = _repository.GetBooks();
+            if(bookItems != null)
+            {
+                return Ok(_mapper.Map<IEnumerable<BookReadDto>>(bookItems));
+            }
+            return NotFound();
+        }
+
+        [HttpPost("book")]
         public ActionResult <BookReadDto> CreateBook(BookCreateDto bookCreateDto)
         {
             var bookModel = _mapper.Map<Book>(bookCreateDto);
             _repository.CreateBook(bookModel);
             _repository.SaveChanges();
             var bookReadDto = _mapper.Map<BookReadDto>(bookModel);
-            return CreatedAtRoute(nameof(GetBookById), new { bookModel.Id }, bookReadDto);
+            return CreatedAtRoute(nameof(GetBookById), new { bookModel.BookId }, bookReadDto);
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using CSharpLibrary.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace CSharpLibrary.Data
 {
@@ -27,9 +27,16 @@ namespace CSharpLibrary.Data
 
         public Book GetBookById(int id)
         {
-            var book = _context.Book.FirstOrDefault(b => b.Id == id);
-            return book;
+            return _context.Book
+                .Include(b => b.Author)
+                .FirstOrDefault(b => b.BookId == id);
         }
+
+        public IEnumerable<Book> GetBooks()
+        {
+            return _context.Book.ToList();
+        }
+
 
         public bool SaveChanges()
         {

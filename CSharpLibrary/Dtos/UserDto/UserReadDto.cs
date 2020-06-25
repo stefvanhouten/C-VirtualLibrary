@@ -1,9 +1,5 @@
-﻿using CSharpLibrary.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using CSharpLibrary.Dtos.BookDto;
 
 namespace CSharpLibrary.Dtos.UserDto
 {
@@ -15,8 +11,14 @@ namespace CSharpLibrary.Dtos.UserDto
 
         public class RentedBookDto
         {
-            public Book Book;
+            public BookReadDto Book;
         }
+    }
+
+    public class UserListDto
+    {
+        public int UserId;
+        public string Name;
     }
 
 

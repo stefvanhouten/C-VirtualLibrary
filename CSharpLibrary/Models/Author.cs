@@ -6,17 +6,14 @@ using System.Threading.Tasks;
 
 namespace CSharpLibrary.Models
 {
-    public class User
+    public class Author
     {
         [Key]
-        public int UserId { get; set; }
+        public int AuthorId { get; set; }
 
         [Required]
         [MaxLength(255)]
         public string Name { get; set; }
 
-        public ICollection<RentedBook> RentedBooks { get; set; }
-
     }
-
 }

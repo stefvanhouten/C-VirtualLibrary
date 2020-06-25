@@ -27,10 +27,14 @@ namespace CSharpLibrary.Controllers
          * USERS routes
          */
         [HttpGet("users/")]
-        public ActionResult<IEnumerable<User>> GetAllUsers()
+        public ActionResult<IEnumerable<UserListDto>> GetAllUsers()
         {
             var users = _repository.GetAllUsers();
-            return Ok(users);
+            if(!users.Any())
+            {
+                return NotFound();
+            }
+            return Ok(_mapper.Map<IEnumerable<UserListDto>>(users));
         }
 
         /* 
@@ -40,11 +44,11 @@ namespace CSharpLibrary.Controllers
         public ActionResult<UserReadDto> GetUserById(int id)
         {
             var user = _repository.GetUserById(id);
-            if(user != null)
+            if(user == null)
             {
-                return Ok(_mapper.Map<UserReadDto>(user));
+                return NotFound();
             }
-            return NotFound();
+            return Ok(_mapper.Map<UserReadDto>(user));
         }
     }
 }

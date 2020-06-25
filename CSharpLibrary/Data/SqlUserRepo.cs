@@ -1,10 +1,7 @@
 ﻿using CSharpLibrary.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace CSharpLibrary.Data
 {
@@ -22,7 +19,7 @@ namespace CSharpLibrary.Data
             return _context.Users
                 .Include(u => u.RentedBooks)
                 .ThenInclude(u => u.Book)
-                .FirstOrDefault(p => p.Id == id);
+                .FirstOrDefault(p => p.UserId == id);
         }
 
         public IEnumerable<User> GetAllUsers()

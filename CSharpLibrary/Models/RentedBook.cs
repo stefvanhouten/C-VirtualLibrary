@@ -9,12 +9,13 @@ namespace CSharpLibrary.Models
     public class RentedBook
     {
         [Key]
-        public int Id { get; set; }
+        public int RentedBookId { get; set; }
 
         [Required]
         public User User { get; set; }
 
         [Required]
         public Book Book { get; set; }
+
     }
 }

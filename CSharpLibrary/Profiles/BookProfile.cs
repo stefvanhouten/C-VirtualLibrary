@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
+using CSharpLibrary.Dtos.AuthorDto;
 using CSharpLibrary.Dtos.BookDto;
 using CSharpLibrary.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CSharpLibrary.Profiles
 {
@@ -13,6 +10,8 @@ namespace CSharpLibrary.Profiles
         public BookProfile()
         {
             CreateMap<Book, BookReadDto>();
+            //CreateMap<BookReadDto, AuthorReadDto>();            //CreateMap<BookReadDto, AuthorReadDto>();
+            CreateMap<BookCreateDto, Book>();
         }
     }
 }

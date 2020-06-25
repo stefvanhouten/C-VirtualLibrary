@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSharpLibrary.Migrations
 {
     [DbContext(typeof(UserContext))]
-    [Migration("20200621122922_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20200625101911_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,26 +20,63 @@ namespace CSharpLibrary.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("CSharpLibrary.Models.Book", b =>
+            modelBuilder.Entity("CSharpLibrary.Models.Author", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("AuthorId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.HasKey("AuthorId");
+
+                    b.ToTable("Author");
+
+                    b.HasData(
+                        new
+                        {
+                            AuthorId = 1,
+                            Name = "My Author"
+                        });
+                });
+
+            modelBuilder.Entity("CSharpLibrary.Models.Book", b =>
+                {
+                    b.Property<int>("BookId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
 
-                    b.HasKey("Id");
+                    b.HasKey("BookId");
+
+                    b.HasIndex("AuthorId");
 
                     b.ToTable("Book");
+
+                    b.HasData(
+                        new
+                        {
+                            BookId = 1,
+                            AuthorId = 1,
+                            Title = "C# For Dummies"
+                        });
                 });
 
             modelBuilder.Entity("CSharpLibrary.Models.RentedBook", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("RentedBookId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -50,7 +87,7 @@ namespace CSharpLibrary.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("RentedBookId");
 
                     b.HasIndex("BookId");
 
@@ -61,7 +98,7 @@ namespace CSharpLibrary.Migrations
 
             modelBuilder.Entity("CSharpLibrary.Models.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -71,9 +108,25 @@ namespace CSharpLibrary.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            Name = "Stef"
+                        });
+                });
+
+            modelBuilder.Entity("CSharpLibrary.Models.Book", b =>
+                {
+                    b.HasOne("CSharpLibrary.Models.Author", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CSharpLibrary.Models.RentedBook", b =>

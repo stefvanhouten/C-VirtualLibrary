@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using CSharpLibrary.Dtos.UserDto;
 using CSharpLibrary.Models;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace CSharpLibrary.Profiles
 {
@@ -11,6 +9,7 @@ namespace CSharpLibrary.Profiles
         public UserProfile()
         {
             CreateMap<User, UserReadDto>();
+            CreateMap<User, UserListDto>();
             CreateMap<RentedBook, UserReadDto.RentedBookDto>();
         }
     }
