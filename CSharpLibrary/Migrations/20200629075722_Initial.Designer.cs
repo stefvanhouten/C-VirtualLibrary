@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSharpLibrary.Migrations
 {
     [DbContext(typeof(UserContext))]
-    [Migration("20200625101911_Init")]
-    partial class Init
+    [Migration("20200629075722_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,6 +54,9 @@ namespace CSharpLibrary.Migrations
                     b.Property<int>("AuthorId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ISBN")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(255)")
@@ -63,6 +66,9 @@ namespace CSharpLibrary.Migrations
 
                     b.HasIndex("AuthorId");
 
+                    b.HasIndex("ISBN")
+                        .IsUnique();
+
                     b.ToTable("Book");
 
                     b.HasData(
@@ -70,6 +76,7 @@ namespace CSharpLibrary.Migrations
                         {
                             BookId = 1,
                             AuthorId = 1,
+                            ISBN = 1000000,
                             Title = "C# For Dummies"
                         });
                 });

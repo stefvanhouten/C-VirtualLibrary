@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using CSharpLibrary.Data;
 using CSharpLibrary.Dtos.BookDto;
+using CSharpLibrary.Dtos.RentedBookDto;
 using CSharpLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Data;
+using System.Net;
 
 namespace CSharpLibrary.Controllers
 {
@@ -21,36 +24,61 @@ namespace CSharpLibrary.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("book/{id}", Name ="GetBookById")]
+        [HttpGet("book/{id}", Name = "GetBookById")]
         public ActionResult<BookReadDto> GetBookById(int id)
         {
             var bookModel = _repository.GetBookById(id);
-            if(bookModel != null)
+            if(bookModel == null)
             {
-                return Ok(_mapper.Map<BookReadDto>(bookModel));
+                return NotFound();
             }
-            return NotFound();
+            return Ok(_mapper.Map<BookReadDto>(bookModel));
         }
 
         [HttpGet("books")]
         public ActionResult<IEnumerable<BookReadDto>> GetBooks()
         {
             var bookItems = _repository.GetBooks();
-            if(bookItems != null)
+            if(bookItems == null)
             {
-                return Ok(_mapper.Map<IEnumerable<BookReadDto>>(bookItems));
+                return NotFound();
             }
-            return NotFound();
+            return Ok(_mapper.Map<IEnumerable<BookReadDto>>(bookItems));
         }
 
         [HttpPost("book")]
-        public ActionResult <BookReadDto> CreateBook(BookCreateDto bookCreateDto)
+        public ActionResult<BookReadDto> CreateBook(BookCreateDto bookCreateDto)
         {
-            var bookModel = _mapper.Map<Book>(bookCreateDto);
+            if (_repository.IsbnExists(bookCreateDto.ISBN))
+            {
+                return Conflict(new { 
+                    message = $"An existing record with the ISBN '{bookCreateDto.ISBN}' was already found.",
+                    type = "https://tools.ietf.org/html/rfc7231#section-6.5.8",
+                    status = 409
+                });
+            }
+            Book bookModel = _mapper.Map<Book>(bookCreateDto);
             _repository.CreateBook(bookModel);
             _repository.SaveChanges();
-            var bookReadDto = _mapper.Map<BookReadDto>(bookModel);
-            return CreatedAtRoute(nameof(GetBookById), new { bookModel.BookId }, bookReadDto);
+            BookReadDto bookReadDto = _mapper.Map<BookReadDto>(_repository.GetBookById(bookModel.BookId));
+            return CreatedAtRoute(nameof(GetBookById), new { id = bookModel.BookId }, bookReadDto);
+        }
+
+        [HttpPost("book/rent")]
+        public ActionResult<CreateRentedBook> RentBook(CreateRentedBook rentedBook)
+        {
+            RentedBook rented = _mapper.Map<RentedBook>(rentedBook);
+            try
+            {
+                var test = _repository.RentBook(rented);
+                _repository.SaveChanges();
+                CreateRentedBook rentBookDto = _mapper.Map<CreateRentedBook>(test);
+                return Ok(rentBookDto);
+            }
+            catch (KeyNotFoundException e)
+            {
+                return NotFound(e.Data["Error"]);
+            }
         }
     }
 }

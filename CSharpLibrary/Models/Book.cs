@@ -12,6 +12,9 @@ namespace CSharpLibrary.Models
         [MaxLength(255)]
         public string Title { get; set; }
 
+        [Required]
+        public int ISBN { get; set; }
+
         [ForeignKey("Author")]
         public int AuthorId { get; set; }
 

@@ -2,7 +2,7 @@
 
 namespace CSharpLibrary.Migrations
 {
-    public partial class Init : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -39,6 +39,7 @@ namespace CSharpLibrary.Migrations
                     BookId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(maxLength: 255, nullable: false),
+                    ISBN = table.Column<int>(nullable: false),
                     AuthorId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -58,8 +59,8 @@ namespace CSharpLibrary.Migrations
                 {
                     RentedBookId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(nullable: false),
-                    BookId = table.Column<int>(nullable: false)
+                    BookId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -90,13 +91,19 @@ namespace CSharpLibrary.Migrations
 
             migrationBuilder.InsertData(
                 table: "Book",
-                columns: new[] { "BookId", "AuthorId", "Title" },
-                values: new object[] { 1, 1, "C# For Dummies" });
+                columns: new[] { "BookId", "AuthorId", "ISBN", "Title" },
+                values: new object[] { 1, 1, 1000000, "C# For Dummies" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Book_AuthorId",
                 table: "Book",
                 column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Book_ISBN",
+                table: "Book",
+                column: "ISBN",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_RentedBook_BookId",

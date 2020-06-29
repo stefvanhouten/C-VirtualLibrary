@@ -52,6 +52,9 @@ namespace CSharpLibrary.Migrations
                     b.Property<int>("AuthorId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ISBN")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(255)")
@@ -61,6 +64,9 @@ namespace CSharpLibrary.Migrations
 
                     b.HasIndex("AuthorId");
 
+                    b.HasIndex("ISBN")
+                        .IsUnique();
+
                     b.ToTable("Book");
 
                     b.HasData(
@@ -68,6 +74,7 @@ namespace CSharpLibrary.Migrations
                         {
                             BookId = 1,
                             AuthorId = 1,
+                            ISBN = 1000000,
                             Title = "C# For Dummies"
                         });
                 });
